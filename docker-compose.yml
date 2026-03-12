@@ -121,6 +121,9 @@ services:
       AZURE_STORAGE_ENDPOINT_URL: ${AZURE_STORAGE_ENDPOINT_URL:-http://azurite:10000/devstoreaccount1}
       AZURE_STORAGE_PUBLIC_ENDPOINT_URL: ${AZURE_STORAGE_PUBLIC_ENDPOINT_URL:-http://localhost:10000/devstoreaccount1}
 
+    networks:
+      - default
+      - easypanel
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8081/v1/health"]
@@ -150,6 +153,12 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+networks:
+  default:
+  easypanel:
+    external: true
+    name: easypanel-gorgug-media-server
 
 volumes:
   remote-db-data:
